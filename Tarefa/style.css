@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+canvas {
+    border: 2px solid black;
+}
+
+#main {
+    text-align: center;
+}
+
+.tudo {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#foto {
+    height: 100px;
+    width: 100px;
+    background-size: cover;
+    background-position: 50%;
+    margin: 20px;
+}
+
+#camera {
+    width: 640px;
+    margin: 20px;
+    border: 1px solid #000;
+}
+
+.caixaVoltar {
+    display: flex;
+    flex-direction: column;
+}
+
+.itensArtes {
+    display: flex;
+    flex-direction: column;
+}
+

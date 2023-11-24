@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Câmera</title>
+    <style>
+        #foto {
+            height: 300px;
+            width: 300px;
+            border-radius: 150px;
+            background-size: cover;
+            background-position: 50%;
+            margin: 20px;
+        }
+
+        #camera {
+            width: 640px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    
+    <video id="camera" autoplay></video>
+    <div id="foto"></div>
+    <button onclick="abrirCamera()">Abrir Câmera</button>
+    <button onclick="tirarFoto()">Tirar Foto</button>
+    <button onclick="fechar()">Fechar Câmera</button>
+
+    <script src="main.js"></script>
+</body>
+</html>

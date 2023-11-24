@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Criatividade ao limite</h1>
+
+    <main id="main">
+        <canvas id="canvas" width="900" height="700"></canvas>
+        <input type="color" id="seletorDeCores">
+        <button id="botaoBorracha">Borracha</button>
+        <button id="botaoPreencher">Preencher</button>
+        <button id="botaoPreencherFundo">Preencher Fundo</button>
+
+        <section class="tudo">
+            <div class="itensArtes">
+                <button onclick="abrirCamera()">Abrir Câmera</button>
+                <button onclick="tirarFoto()">Tirar Foto</button>
+                <button onclick="fechar()">Fechar Câmera</button>
+            </div>
+            <div class="Quadro">
+                <video id="camera" autoplay></video>
+                <div id="foto"></div>
+            </div>
+            <div class="caixaVoltar">
+                <button>Delete</button>
+                <button>Anterior</button>
+                <button>Próximo</button>
+                <button onclick="baixar()">Baixar</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
