@@ -1,4 +1,5 @@
 var mediaStream;
+const aparecerCam = document.getElementById("camera")
 
 function abrirCamera() {
 
@@ -12,39 +13,63 @@ function abrirCamera() {
         .catch(function (error) {
             console.error('Erro ao acessar a câmera:', error)
         });
+        
+        if(aparecerCam.style.display === "none") {
+            aparecerCam.style.display = "block"
+        } else {
+            aparecerCam.style.display = "none"
+        }
 }
 
 function tirarFoto() {
-
     const areaVideo = document.getElementById('camera');
-    const canvas = document.createElement('canvas');
-    canvas.width = areaVideo.videoWidth;
-    canvas.height = areaVideo.videoHeight;
-    const context = canvas.getContext('2d');
-    context.drawImage(areaVideo, 0, 0, canvas.width, canvas.height);
+    const canvas = document.getElementById('canvas');
+    const contexto = canvas.getContext('2d');
 
-    //CONVERTENDO A IMAGEM PARA O FORMATO base64
-    const imageDataURL = canvas.toDataURL();
+    // Cria um novo canvas temporário para armazenar a foto
+    const tempCanvas = document.createElement('canvas');
+    const tempContexto = tempCanvas.getContext('2d');
+    tempCanvas.width = areaVideo.videoWidth;
+    tempCanvas.height = areaVideo.videoHeight;
+    tempContexto.drawImage(areaVideo, 0, 0, tempCanvas.width, tempCanvas.height);
 
-    //ARMAZENANDO A IMAGEM NO BACKGROUND DA DIV
+    // Limpa o canvas principal
+    contexto.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Desenha a foto no canvas principal
+    contexto.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
+
+    //ARMAZENANDO A IMAGEM NO BACKGROUND DA DIV (Opcional, dependendo do seu design)
     const fotoDiv = document.getElementById('foto');
-    fotoDiv.style.backgroundImage = `url(${imageDataURL})`;
+    fotoDiv.style.backgroundImage = `url(${tempCanvas.toDataURL()})`;
 
+    // Limpa o link de download antigo, se houver
+    const dowloadLink = document.getElementById('downloadLink');
+    if (dowloadLink) {
+        dowloadLink.remove();
+    }
 
-    const dowloadLink = document.createElement('a');
-
-    dowloadLink.href = imageDataURL;
-    dowloadLink.download = 'foto.png'
-    dowloadLink.textContent = 'Clique para baixar'
-    document.body.appendChild(dowloadLink);
-
+    // Cria um novo link de download
+    const newDowloadLink = document.createElement('a');
+    newDowloadLink.id = 'downloadLink';
+    newDowloadLink.href = tempCanvas.toDataURL();
+    newDowloadLink.download = 'foto.png';
+    newDowloadLink.textContent = 'Clique para baixar';
+    document.body.appendChild(newDowloadLink);
 }
+
 
 function fechar() {
     navigator.mediaDevices.getUserMedia({ video: false });
     const areaVideo = document.getElementById('camera')
     areaVideo.srcObject = null;
     mediaStream = null;
+
+    if(aparecerCam.style.display === "none") {
+        aparecerCam.style.display = "block"
+    } else {
+        aparecerCam.style.display = "none"
+    }
 }
 
 let canvas = document.getElementById("canvas"); // Pega o ID canvas no HTML
