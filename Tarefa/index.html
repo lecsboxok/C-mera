@@ -12,19 +12,19 @@
     <h1>Criatividade ao limite</h1>
 
     <main id="main">
-        <canvas id="canvas" width="900" height="700"></canvas>
-        <input type="color" id="seletorDeCores">
-        <button id="botaoBorracha">Borracha</button>
-        <button id="botaoPreencher">Preencher</button>
-        <button id="botaoPreencherFundo">Preencher Fundo</button>
 
         <section class="tudo">
             <div class="itensArtes">
                 <button onclick="abrirCamera()">Abrir Câmera</button>
                 <button onclick="tirarFoto()">Tirar Foto</button>
                 <button onclick="fechar()">Fechar Câmera</button>
+                <input type="color" id="seletorDeCores">
+                <button id="botaoBorracha">Borracha</button>
+                <button id="botaoPreencher">Preencher</button>
+                <button id="botaoPreencherFundo">Preencher Fundo</button>
             </div>
             <div class="Quadro">
+                <canvas id="canvas" width="900" height="700"></canvas>
                 <video id="camera" autoplay></video>
                 <div id="foto"></div>
             </div>
