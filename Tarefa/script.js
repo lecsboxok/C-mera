@@ -1,63 +1,57 @@
-var mediaStream;
-const aparecerCam = document.getElementById("camera")
+let mediaStream;
+const aparecerCam = document.getElementById("camera");
+const canvas = document.getElementById("canvas");
+const contexto = canvas.getContext("2d");
+const tempCanvas = document.createElement('canvas');
+const tempContexto = tempCanvas.getContext('2d');
+let fotoArmazenada = null;
 
 function abrirCamera() {
-
-    navigator.mediaDevices.getUserMedia({ video: true, audio: false})
-        .then(function (stream){
-            mediaStream = stream;
-
-            const areaVideo = document.getElementById('camera');
-            areaVideo.srcObject = stream;
-        })
-        .catch(function (error) {
-            console.error('Erro ao acessar a câmera:', error)
-        });
-        
-        if(aparecerCam.style.display === "none") {
-            aparecerCam.style.display = "block"
-        } else {
-            aparecerCam.style.display = "none"
-        }
+    if (aparecerCam.style.display === "none") {
+        aparecerCam.style.display = "block";
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+            .then(function (stream) {
+                mediaStream = stream;
+                const areaVideo = document.getElementById('camera');
+                areaVideo.srcObject = stream;
+            })
+            .catch(function (error) {
+                console.error('Erro ao acessar a câmera:', error);
+            });
+    } else {
+        aparecerCam.style.display = "none";
+    }
 }
 
 function tirarFoto() {
     const areaVideo = document.getElementById('camera');
-    const canvas = document.getElementById('canvas');
-    const contexto = canvas.getContext('2d');
 
     // Cria um novo canvas temporário para armazenar a foto
-    const tempCanvas = document.createElement('canvas');
-    const tempContexto = tempCanvas.getContext('2d');
+
     tempCanvas.width = areaVideo.videoWidth;
     tempCanvas.height = areaVideo.videoHeight;
     tempContexto.drawImage(areaVideo, 0, 0, tempCanvas.width, tempCanvas.height);
 
-    // Limpa o canvas principal
-    contexto.clearRect(0, 0, canvas.width, canvas.height);
-
     // Desenha a foto no canvas principal
     contexto.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
 
-    //ARMAZENANDO A IMAGEM NO BACKGROUND DA DIV (Opcional, dependendo do seu design)
-    const fotoDiv = document.getElementById('foto');
-    fotoDiv.style.backgroundImage = `url(${tempCanvas.toDataURL()})`;
-
-    // Limpa o link de download antigo, se houver
-    const dowloadLink = document.getElementById('downloadLink');
-    if (dowloadLink) {
-        dowloadLink.remove();
-    }
-
-    // Cria um novo link de download
-    const newDowloadLink = document.createElement('a');
-    newDowloadLink.id = 'downloadLink';
-    newDowloadLink.href = tempCanvas.toDataURL();
-    newDowloadLink.download = 'foto.png';
-    newDowloadLink.textContent = 'Clique para baixar';
-    document.body.appendChild(newDowloadLink);
+    //ARMAZENA A IMAGEM SEPARADAMENTE
+    fotoArmazenada = new Image();
+    fotoArmazenada.src = tempCanvas.toDataURL();
 }
 
+function baixar() {
+    const canvas = document.getElementById('canvas');
+    const dataURL = canvas.toDataURL('image/png');
+
+    const link = document.createElement('a');
+    link.href = dataURL;
+    link.download = 'desenho.png';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 
 function fechar() {
     navigator.mediaDevices.getUserMedia({ video: false });
@@ -72,8 +66,6 @@ function fechar() {
     }
 }
 
-let canvas = document.getElementById("canvas"); // Pega o ID canvas no HTML
-let contexto = canvas.getContext("2d"); // Pegamos o contexto do desenho, esse é o método que retorna o tipo da "animação", usar o paramêtro "2d" significa que o objeto que será reproduzido será bidimensional
 let desenhando = false; // variável que vai indentificar se estamos desenhando
 let corSelecionada = "#000000";
 const seletorDeCores = document.getElementById("seletorDeCores");
@@ -154,3 +146,4 @@ botaoPreencherFundo.addEventListener("click", function () {
     contexto.fillStyle = corSelecionada;
     contexto.fillRect(0, 0, canvas.width, canvas.height);
 });
+

@@ -14,6 +14,9 @@
     <main id="main">
 
         <section class="tudo">
+            <div class="video">
+                <video id="camera" autoplay></video>
+            </div>
             <div class="itensArtes">
                 <button onclick="abrirCamera()">Abrir Câmera</button>
                 <button onclick="tirarFoto()">Tirar Foto</button>
@@ -24,14 +27,13 @@
                 <button id="botaoPreencherFundo">Preencher Fundo</button>
             </div>
             <div class="Quadro">
-                <canvas id="canvas" width="900" height="700"></canvas>
-                <video id="camera" autoplay></video>
+                <canvas id="canvas" width="800" height="600"></canvas>
                 <div id="foto"></div>
             </div>
             <div class="caixaVoltar">
                 <button>Delete</button>
-                <button>Anterior</button>
-                <button>Próximo</button>
+                <button id="botaoDesfazer">Anterior</button>
+                <button id="botaoRefazer">Próximo</button>
                 <button onclick="baixar()">Baixar</button>
             </div>
         </section>

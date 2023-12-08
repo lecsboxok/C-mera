@@ -9,8 +9,27 @@ a {
     text-decoration: none;
 }
 
+@font-face {
+    font-family: 'Montserrat';
+    src: url(fonts/Montserrat-VariableFont_wght.ttf);
+}
+
 canvas {
     border: 2px solid black;
+}
+
+h1 {
+    font: 700 35px 'Montserrat', sans-serif;
+    margin: 50px;
+    text-align: center;
+}
+
+button {
+    font: 400 20px 'Montserrat', sans-serif;
+    padding: 5px 10px;
+    background-color: #FFD233;
+    margin: 2px;
+    border-radius: 5px;
 }
 
 #main {
@@ -28,13 +47,18 @@ canvas {
     width: 100px;
     background-size: cover;
     background-position: 50%;
-    margin: 20px;
+    margin: 10px;
 }
 
 #camera {
     width: 640px;
     margin: 20px;
-    display: none;
+    display: block;
+}
+
+.video {
+    position: absolute;
+
 }
 
 .caixaVoltar {
