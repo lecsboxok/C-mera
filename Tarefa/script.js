@@ -5,67 +5,6 @@ const contexto = canvas.getContext("2d");
 const tempCanvas = document.createElement('canvas');
 const tempContexto = tempCanvas.getContext('2d');
 let fotoArmazenada = null;
-
-function abrirCamera() {
-    if (aparecerCam.style.display === "none") {
-        aparecerCam.style.display = "block";
-        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-            .then(function (stream) {
-                mediaStream = stream;
-                const areaVideo = document.getElementById('camera');
-                areaVideo.srcObject = stream;
-            })
-            .catch(function (error) {
-                console.error('Erro ao acessar a câmera:', error);
-            });
-    } else {
-        aparecerCam.style.display = "none";
-    }
-}
-
-function tirarFoto() {
-    const areaVideo = document.getElementById('camera');
-
-    // Cria um novo canvas temporário para armazenar a foto
-
-    tempCanvas.width = areaVideo.videoWidth;
-    tempCanvas.height = areaVideo.videoHeight;
-    tempContexto.drawImage(areaVideo, 0, 0, tempCanvas.width, tempCanvas.height);
-
-    // Desenha a foto no canvas principal
-    contexto.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
-
-    //ARMAZENA A IMAGEM SEPARADAMENTE
-    fotoArmazenada = new Image();
-    fotoArmazenada.src = tempCanvas.toDataURL();
-}
-
-function baixar() {
-    const canvas = document.getElementById('canvas');
-    const dataURL = canvas.toDataURL('image/png');
-
-    const link = document.createElement('a');
-    link.href = dataURL;
-    link.download = 'desenho.png';
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-function fechar() {
-    navigator.mediaDevices.getUserMedia({ video: false });
-    const areaVideo = document.getElementById('camera')
-    areaVideo.srcObject = null;
-    mediaStream = null;
-
-    if(aparecerCam.style.display === "none") {
-        aparecerCam.style.display = "block"
-    } else {
-        aparecerCam.style.display = "none"
-    }
-}
-
 let desenhando = false; // variável que vai indentificar se estamos desenhando
 let corSelecionada = "#000000";
 const seletorDeCores = document.getElementById("seletorDeCores");
@@ -147,3 +86,62 @@ botaoPreencherFundo.addEventListener("click", function () {
     contexto.fillRect(0, 0, canvas.width, canvas.height);
 });
 
+function abrirCamera() {
+    if (aparecerCam.style.display === "none") {
+        aparecerCam.style.display = "block";
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+            .then(function (stream) {
+                mediaStream = stream;
+                const areaVideo = document.getElementById('camera');
+                areaVideo.srcObject = stream;
+            })
+            .catch(function (error) {
+                console.error('Erro ao acessar a câmera:', error);
+            });
+    } else {
+        aparecerCam.style.display = "none";
+    }
+}
+
+function tirarFoto() {
+    const areaVideo = document.getElementById('camera');
+
+    // Cria um novo canvas temporário para armazenar a foto
+
+    tempCanvas.width = areaVideo.videoWidth;
+    tempCanvas.height = areaVideo.videoHeight;
+    tempContexto.drawImage(areaVideo, 0, 0, tempCanvas.width, tempCanvas.height);
+
+    // Desenha a foto no canvas principal
+    contexto.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
+
+    //ARMAZENA A IMAGEM SEPARADAMENTE
+    fotoArmazenada = new Image();
+    fotoArmazenada.src = tempCanvas.toDataURL();
+}
+
+function baixar() {
+    const canvas = document.getElementById('canvas');
+    const dataURL = canvas.toDataURL('image/png');
+
+    const link = document.createElement('a');
+    link.href = dataURL;
+    link.download = 'desenho.png';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function fechar() {
+    navigator.mediaDevices.getUserMedia({ video: false });
+    const areaVideo = document.getElementById('camera')
+    areaVideo.srcObject = null;
+    mediaStream = null;
+
+    if(aparecerCam.style.display === "none") {
+        aparecerCam.style.display = "block"
+    } else {
+        aparecerCam.style.display = "none"
+    }
+}
